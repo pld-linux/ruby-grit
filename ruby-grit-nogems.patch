@@ -1,0 +1,15 @@
+diff -ur mojombo-grit-7609e74-o/lib/grit.rb mojombo-grit-7609e74/lib/grit.rb
+--- mojombo-grit-7609e74-o/lib/grit.rb	2010-08-19 18:55:45.000000000 -0600
++++ mojombo-grit-7609e74/lib/grit.rb	2010-08-28 11:19:44.000000000 -0600
+@@ -18,7 +18,10 @@
+ end
+ 
+ # third party
+-require 'rubygems'
++begin
++	require 'rubygems'
++rescue LoadError
++end
+ begin
+   gem "mime-types", ">=0"
+   require 'mime/types'
