@@ -11,7 +11,7 @@ License:	MIT
 Group:		Development/Tools
 Source0:	http://download.github.com/%{gitauthor}-%{gitname}-v%{version}-0-g%{gitrev}.tar.gz
 # Source0-md5:	5e6a2d136de6c66059d439f3e2a41b55
-Patch0:	%{name}-nogems.patch
+Patch0:		%{name}-nogems.patch
 URL:		http://grit.rubyforge.org/
 BuildRequires:	rpmbuild(macros) >= 1.277
 BuildRequires:	ruby
@@ -22,12 +22,13 @@ BuildRequires:	setup.rb >= 3.4.1
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-Grit gives you object oriented read/write access to Git repositories via Ruby.
-The main goals are stability and performance. To this end, some of the
-interactions with Git repositories are done by shelling out to the system's
-`git` command, and other interactions are done with pure Ruby reimplementations
-of core Git functionality. This choice, however, is transparent to end users,
-and you need not know which method is being used.
+Grit gives you object oriented read/write access to Git repositories
+via Ruby. The main goals are stability and performance. To this end,
+some of the interactions with Git repositories are done by shelling
+out to the system's `git` command, and other interactions are done
+with pure Ruby reimplementations of core Git functionality. This
+choice, however, is transparent to end users, and you need not know
+which method is being used.
 
 %prep
 %setup -q -n %{gitauthor}-%{gitname}-%{gitrev}
@@ -48,5 +49,5 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-/usr/lib/ruby/1.8/grit.rb
-/usr/lib/ruby/1.8/grit
+%{ruby_rubylibdir}/grit.rb
+%{ruby_rubylibdir}/grit
