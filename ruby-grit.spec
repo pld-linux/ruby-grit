@@ -1,24 +1,21 @@
-
-%define gitrev 7609e74
-%define gitauthor mojombo
-%define gitname grit
-
-Summary:	Ruby interface to Git
-Name:		ruby-grit
-Version:	2.2.0
+%define	pkgname	grit
+Summary:	Ruby Git bindings
+Name:		ruby-%{pkgname}
+Version:	2.4.1
 Release:	1
 License:	MIT
-Group:		Development/Tools
-Source0:	http://download.github.com/%{gitauthor}-%{gitname}-v%{version}-0-g%{gitrev}.tar.gz
-# Source0-md5:	5e6a2d136de6c66059d439f3e2a41b55
+Group:		Development/Languages
+Source0:	http://rubygems.org/downloads/%{pkgname}-%{version}.gem
+# Source0-md5:	c8bee515d6eace9aec7336e0ac6b0768
 Patch0:		%{name}-nogems.patch
-URL:		http://grit.rubyforge.org/
-BuildRequires:	rpmbuild(macros) >= 1.277
-BuildRequires:	ruby
-BuildRequires:	ruby-modules
-BuildRequires:	setup.rb >= 3.4.1
-%{?ruby_mod_ver_requires_eq}
-#BuildArch:	noarch
+URL:		http://github.com/mojombo/grit
+BuildRequires:	rpm-rubyprov
+BuildRequires:	rpmbuild(macros) >= 1.656
+Requires:	ruby-diff-lcs < 2
+Requires:	ruby-diff-lcs >= 1.1
+Requires:	ruby-mime-types < 2
+Requires:	ruby-mime-types >= 1.15
+BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -31,23 +28,23 @@ choice, however, is transparent to end users, and you need not know
 which method is being used.
 
 %prep
-%setup -q -n %{gitauthor}-%{gitname}-%{gitrev}
+%setup -q -n %{pkgname}-%{version}
 %patch0 -p1
-cp %{_datadir}/setup.rb .
-ruby setup.rb config \
-	--installdirs=std
-ruby setup.rb setup
 
 %install
 rm -rf $RPM_BUILD_ROOT
+install -d $RPM_BUILD_ROOT{%{ruby_vendorlibdir},%{_bindir}}
+cp -a lib/* $RPM_BUILD_ROOT%{ruby_vendorlibdir}
 
-ruby setup.rb install \
-	--prefix=$RPM_BUILD_ROOT
+install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
+cp -a examples/* $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%{ruby_rubylibdir}/grit.rb
-%{ruby_rubylibdir}/grit
+%doc README.md API.txt History.txt PURE_TODO LICENSE
+%{ruby_vendorlibdir}/%{pkgname}.rb
+%{ruby_vendorlibdir}/%{pkgname}
+%{_examplesdir}/%{name}-%{version}
