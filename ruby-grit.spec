@@ -2,7 +2,7 @@
 Summary:	Ruby Git bindings
 Name:		ruby-%{pkgname}
 Version:	2.5.0
-Release:	1
+Release:	2
 License:	MIT
 Group:		Development/Languages
 Source0:	http://rubygems.org/downloads/%{pkgname}-%{version}.gem
